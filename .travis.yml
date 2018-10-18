@@ -15,6 +15,7 @@ before_script:
 
 script:
   - docker build -t "$IMAGE_NAME" .
+  - docker tag "$IMAGE_NAME" "$IMAGE_NAME"
 
 after_success:
   - docker login --username $DOCKER_USER --password $DOCKER_PASS
