@@ -1,3 +1,5 @@
 #!/usr/bin/env sh
 
-gosu aws bash -l -c "$*"
+source /home/aws/.bash_profile
+
+gosu aws "${@}"

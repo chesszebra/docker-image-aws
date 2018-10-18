@@ -68,7 +68,7 @@ RUN mkdir -p ~/.aws/ \
 
 # Update the path with executables.
 RUN mkdir -p ~/.local/bin \
- && echo "export PATH=$PATH:~/.local/bin" >> ~/.bash_profile
+ && echo "export PATH=$PATH:/home/aws/.local/bin" >> ~/.bash_profile
 
 # Run as the root again
 USER root:root
@@ -81,12 +81,14 @@ WORKDIR /data
 
 # Add the entry point script
 ADD usr/local/bin/docker-image-entrypoint.sh /usr/local/bin/docker-image-entrypoint
+ADD usr/local/bin/docker-image-entrypoint-exec.sh /usr/local/bin/docker-image-entrypoint-exec
 
 # Make it executable
 RUN chmod +x /usr/local/bin/docker-image-entrypoint
+RUN chmod +x /usr/local/bin/docker-image-entrypoint-exec
 
 # Execute the entry point
-ENTRYPOINT ["/usr/local/bin/docker-image-entrypoint"]
+ENTRYPOINT ["/usr/local/bin/docker-image-entrypoint", "/usr/local/bin/docker-image-entrypoint-exec"]
 
 # Run bash by default
 CMD ["bash"]
